@@ -24,17 +24,11 @@ public class CarService {
         }
         return carService;
     }
-    public static CarService getInstance() {
-        if (carService == null) {
-            carService = new CarService(DBHelper.getSessionFactory());
-        }
-        return carService;
-    }
+
+
     public List<Car> getAllCars() {
         List allCarList = new LinkedList();
         allCarList = carDao.getAllCars();
         return allCarList;
     }
-
-
 }

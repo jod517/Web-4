@@ -8,23 +8,22 @@ import servlet.ProducerServlet;
 
 public class Main {
 
-        public static void main(String[] args) throws Exception{
-            CustomerServlet customerServlet = new CustomerServlet();
-            ProducerServlet producerServlet = new ProducerServlet();
-            NewDayServlet newDayServlet = new NewDayServlet();
-            DailyReportServlet dailyReportServlet = new DailyReportServlet();
-            ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+    public static void main(String[] args) throws Exception{
+        CustomerServlet customerServlet = new CustomerServlet();
+        ProducerServlet producerServlet = new ProducerServlet();
+        NewDayServlet newDayServlet = new NewDayServlet();
+        DailyReportServlet dailyReportServlet = new DailyReportServlet();
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
+        context.addServlet(new ServletHolder(customerServlet), "/customer");
+        context.addServlet(new ServletHolder(producerServlet), "/producer");
+        context.addServlet(new ServletHolder(newDayServlet), "/newday");
+        context.addServlet(new ServletHolder(dailyReportServlet), "/report/*");
 
-            context.addServlet(new ServletHolder(customerServlet), "/customer");
-            context.addServlet(new ServletHolder(producerServlet), "/producer");
-            context.addServlet(new ServletHolder(newDayServlet), "/newday");
-            context.addServlet(new ServletHolder(dailyReportServlet), "/report/*");
+        Server server = new Server(8080);
+        server.setHandler(context);
 
-            Server server = new Server(8080);
-            server.setHandler(context);
-
-            server.start();
-            server.join();
-        }
+        server.start();
+        server.join();
     }
+}

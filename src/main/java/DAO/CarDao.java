@@ -15,6 +15,9 @@ public class CarDao {
     public CarDao() {
         this.sessionFactory = DBHelper.getSessionFactory();
     }
+
+
+
     public List<Car> getAllCars() {
         String hql = "FROM Car";
         Session session = sessionFactory.openSession();
