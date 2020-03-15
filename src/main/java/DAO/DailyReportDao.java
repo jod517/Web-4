@@ -3,6 +3,7 @@ package DAO;
 import model.DailyReport;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import service.DailyReportService;
 
 import java.util.List;
 
@@ -20,5 +21,33 @@ public class DailyReportDao {
         transaction.commit();
         session.close();
         return dailyReports;
+    }
+
+
+    public void updateReport(Long earnings, Long soldCars) {
+        List<DailyReport> list = DailyReportService.getInstance().getAllDailyReports();
+        Transaction transaction = null;
+        try {
+            if (list.size() != 0) {
+                DailyReport dailyReport = list.get(list.size() - 1);
+                dailyReport.setEarnings(dailyReport.getEarnings() + earnings);
+                dailyReport.setSoldCars(dailyReport.getSoldCars() + soldCars);
+                transaction = session.beginTransaction();
+                session.update(dailyReport);
+                transaction.commit();
+            } else {
+                transaction = session.beginTransaction();
+                session.save(new DailyReport(earnings, soldCars));
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            session.close();
+        }
+
     }
 }

@@ -32,4 +32,8 @@ public class DailyReportService {
     public DailyReport getLastReport() {
         return null;
     }
+    public void updateReport(Long earnings, Long soldCars) {
+        new DailyReportDao(sessionFactory.openSession()).updateReport(earnings, soldCars);
+    }
+
 }
