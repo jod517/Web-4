@@ -34,6 +34,22 @@ public class CarService {
         return list;
     }
 
+    public int getNumberBrand(String brand) {
+        List<Car> list = null;
+        int number = 0;
+        CarDao dao = new CarDao( sessionFactory.openSession());
+        list = dao.getCarByBrand(brand);
+        if (list != null) {
+            number = list.size();
+        }
+        return number;
+    }
+
+    public void addCar(Car car) {
+        CarDao dao = new CarDao(sessionFactory.openSession());
+        dao.addCar(car);
+    }
+
     public boolean soldCar(Map<String, String> map) {
         return new CarDao(sessionFactory.openSession()).soldCar(map);
     }

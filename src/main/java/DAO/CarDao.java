@@ -1,14 +1,14 @@
 package DAO;
 
 import model.Car;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import service.DailyReportService;
 import util.DBHelper;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
 
@@ -23,16 +23,14 @@ public class CarDao {
 
 
     public List<Car> getAllCars() {
-        Criteria criteria =
-                session.createCriteria(Car.class);
+        Criteria criteria = session.createCriteria(Car.class);
         List<Car> result = (List<Car>) criteria.list();
         session.close();
         return result;
     }
 
     public boolean soldCar(Map<String, String> map) {
-        Criteria criteria =
-                session.createCriteria(Car.class);
+        Criteria criteria = session.createCriteria(Car.class);
         List<Car> carsToSell = (List<Car>) criteria
                 .add(Restrictions.allEq(map))
                 .list();
@@ -56,5 +54,25 @@ public class CarDao {
         session.close();
         return false;
 
+    }
+
+    public List<Car> getCarByBrand (String brand) {
+        session.beginTransaction();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Car> criteriaQuery = criteriaBuilder.createQuery(Car.class);
+        Root<Car> carRoot = criteriaQuery.from(Car.class);
+        criteriaQuery.select(carRoot).where(criteriaBuilder.equal(carRoot.get("brand"),brand));
+        Query<Car> query= session.createQuery(criteriaQuery);
+        List<Car> results = query.getResultList();
+        session.getTransaction().commit();
+        session.close();
+        return results;
+    }
+
+    public void addCar(Car car) {
+        session.beginTransaction();
+        session.save(car);
+        session.getTransaction().commit();
+        session.close();
     }
 }
