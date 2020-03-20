@@ -5,7 +5,6 @@ import model.Car;
 import org.hibernate.SessionFactory;
 import util.DBHelper;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +25,10 @@ public class CarService {
         return carService;
     }
 
-
     public List<Car> getAllCars() {
         List<Car> list = null;
         CarDao dao = new CarDao( sessionFactory.openSession());
-        list = dao.getAllCars();
+        list = dao.getAllCar();
         return list;
     }
 
@@ -50,6 +48,10 @@ public class CarService {
         dao.addCar(car);
     }
 
+    public Car getCarByParametr(String brand, String model, String number) {
+        CarDao dao = new CarDao(sessionFactory.openSession());
+        return dao.getCarByParametr(brand, model, number);
+    }
     public boolean soldCar(Map<String, String> map) {
         return new CarDao(sessionFactory.openSession()).soldCar(map);
     }

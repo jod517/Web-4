@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cars")
-public class Car {
+public  class Car {
 
     @Id
     @Column(name = "id")
@@ -23,7 +23,7 @@ public class Car {
     @Column(name = "price")
     private Long price;
 
-    public Car() {
+    private Car() {
 
     }
 
@@ -72,5 +72,16 @@ public class Car {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "CarDataSet{" +
+                "id=" + id +
+                ", brand= " + brand +
+                ", model= " + model +
+                ", plate= " + licensePlate +
+                ", price= " + price +
+                " } ";
     }
 }

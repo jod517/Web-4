@@ -1,7 +1,9 @@
 package service;
 
 import DAO.DailyReportDao;
+import model.Car;
 import model.DailyReport;
+import util.DayReportBuffer;
 import org.hibernate.SessionFactory;
 import util.DBHelper;
 

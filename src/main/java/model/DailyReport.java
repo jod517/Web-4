@@ -51,4 +51,13 @@ public class DailyReport {
     public void setSoldCars(Long soldCars) {
         this.soldCars = soldCars;
     }
+
+    @Override
+    public String toString() {
+        return "DailyReport{" +
+                "id=" + id +
+                ", earnings= " + earnings +
+                ", soldCars= " + soldCars +
+                " } ";
+    }
 }
